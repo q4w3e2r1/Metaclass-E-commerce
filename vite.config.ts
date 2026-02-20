@@ -24,5 +24,13 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: parseTsConfigPaths(tsconfig.compilerOptions.paths)
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "styles/variables" as *;`, // Автоматически добавляет импорт во все SCSS файлы
+        loadPaths: [path.resolve(__dirname, 'src')] // Добавляет src в пути поиска
+      }
+    }
   }
 })

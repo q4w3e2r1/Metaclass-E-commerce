@@ -1,14 +1,14 @@
 export const routes = {
-    main: {
-      mask: "/",
-      create: () => "/",
-    },
-    users: {
-      mask: "/users",
-      create: () => "/users",
-    },
-    user: {
-      mask: "/users/:id",
-      create: (id: string) => `/users/${id}`,
-    },
-  }
+  main: {
+    mask: "/",
+    create: () => "/",
+  },
+  products: {
+    mask: "products",
+    create: () => "/products",
+  },
+  product: {
+    mask: "products/:id",
+    create: (id: string) => `/products/${id}`,
+  },
+};

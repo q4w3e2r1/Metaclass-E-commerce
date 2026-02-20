@@ -1,0 +1,97 @@
+@use 'styles/variables';
+@use 'styles/mixins';
+
+.contaier {
+    border-bottom: 2px solid #F3F3F3;
+
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+
+    height: 90px;
+    width: 100%;
+    padding: 2px;
+    gap:5px;
+
+    @include mixins.respond('md'){
+        justify-content: space-around;
+    }
+
+    @include mixins.respond('xl'){
+        justify-content: space-between;
+        padding: 24px 100px;
+    }
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+
+
+    @include mixins.respond('md'){
+        flex-direction:row;
+    }
+
+    img {
+        width: 100%;
+        max-width: fit-content;
+
+    }
+
+
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    justify-content: space-between;
+    padding: 0 1px;
+    text-wrap: nowrap;
+    
+    min-width: fit-content;
+    max-width: 339px;
+
+    width: 50%;
+    gap:5px;
+
+    font-size: 17px;
+    @include mixins.respond('md'){
+        width: 35%;
+    }
+
+    @include mixins.respond('xl'){
+        width: 35%;
+        gap:48px;
+    }
+
+
+
+    li {
+        cursor: pointer;
+
+        &.active {
+            color: variables.$color-brand;
+        }
+    }
+}
+
+.user-tools{
+    max-width: 84px;
+    display: flex;
+    gap: 0.5rem;
+
+    img {
+        cursor: pointer;
+    }
+
+    @include mixins.respond('md'){
+        gap: 1.5rem;
+    }
+
+
+}

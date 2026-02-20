@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { routesConfig } from "./config/react-routes";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
-import './styles/index.css'
+import './styles/index.scss'
 
 const router = createBrowserRouter(routesConfig);
 
