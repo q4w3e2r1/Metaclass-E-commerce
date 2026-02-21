@@ -1,13 +1,13 @@
 import { Outlet } from 'react-router'
 
-import './App.scss'
 import Header from './pages/Header/Header'
+import styles from './App.module.scss'
 
 function App() {
 
   return (
-    <div>
-      <header>
+    <div className={styles.main}>
+      <header className={styles.header}>
         <Header/>
       </header>
       <Outlet />

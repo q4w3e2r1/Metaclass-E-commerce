@@ -1,0 +1,54 @@
+.wrapper {
+    position: relative;
+    display: block;
+    width: 100%;  
+  }
+  
+  .input {
+    width: 100%;
+    height: 52px;
+  
+    margin: 0;
+    padding: 16px 12px;
+    box-sizing: border-box;
+  
+    border: none;
+    background-color: #ffffff;
+  
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+  
+    color: #000000;
+  
+    outline: none;
+  
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  
+    transition: border 0.15s ease-in-out;
+  }
+  
+  /* Если есть afterSlot */
+  .withSlot {
+    padding-right: 44px;
+  }
+  
+  /* Focus */
+  .input:focus {
+    border: 1px solid #518581;
+  }
+  
+  /* Disabled */
+  .input:disabled {
+    color: #afadb5;
+  }
+  
+  /* Правый слот */
+  .afterSlot {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+  }

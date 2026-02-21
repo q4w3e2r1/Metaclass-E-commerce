@@ -1,0 +1,50 @@
+.card {
+    max-width: 360px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: box-shadow 0.15s ease-in-out;
+  }
+  
+  .hovered {
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
+  }
+  
+  .image {
+    background-color: #d9d9d9;
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .contentCard {
+    padding: 24px 12px;
+  
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .contentText {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 52px;
+    flex-direction: row;
+  }
+  
+  .contentSlot {
+    color: #000000;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    letter-spacing: 0;
+    max-width: 203px;
+    overflow: hidden;
+  }

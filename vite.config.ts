@@ -1,35 +1,24 @@
+// vite.config.ts
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import path from 'path'
 
-import path from 'path';
-import tsconfig from './tsconfig.json';
-
-const SRC_PATH = path.resolve(__dirname, 'src');
-
-const parseTsConfigPaths = (paths: Record<string, string[]>): Record<string, string> => {
-  const webpackConfigAliases: Record<string, string> = {};
-
-  Object.entries(paths).forEach(([alias, paths]) => {
-    const aliasPath = paths[0].replace(/[^a-zA-Z]/g, '');
-
-    webpackConfigAliases[alias] = path.join(SRC_PATH, aliasPath);
-  });
-
-  return webpackConfigAliases;
-};
-
-
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: parseTsConfigPaths(tsconfig.compilerOptions.paths)
+    alias: {
+      'components': path.resolve(__dirname, 'src/components'),
+      'config': path.resolve(__dirname, 'src/config'),
+      'styles': path.resolve(__dirname, 'src/styles'),
+      'utils': path.resolve(__dirname, 'src/utils'),
+    }
   },
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use "styles/variables" as *;`, // Автоматически добавляет импорт во все SCSS файлы
-        loadPaths: [path.resolve(__dirname, 'src')] // Добавляет src в пути поиска
+        additionalData: `@use "styles/variables" as *;`,
+        loadPaths: [path.resolve(__dirname, 'src')]
       }
     }
   }

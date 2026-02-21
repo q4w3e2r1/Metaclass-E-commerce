@@ -1,0 +1,30 @@
+.loader {
+    display: inline-block;
+  }
+  
+  .sizeS {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .sizeM {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .sizeL {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .defaultColor .path {
+    fill: #518581;
+  }
+  
+  .changeColor {
+    color: currentColor;
+  }
+  
+  .changeColor .path {
+    fill: currentColor;
+  }

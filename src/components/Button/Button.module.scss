@@ -1,0 +1,41 @@
+.button {
+    padding: 14px 20px;
+    height: 52px;
+    box-sizing: border-box;
+  
+    background: #518581;
+    color: #ffffff;
+  
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: 400;
+  
+    border: none;
+    cursor: pointer;
+  
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    
+  
+    transition: background 0.15s ease-in-out;
+  }
+  
+  /* Hover */
+  .button:hover:not(:disabled) {
+    background: #86aaa7;
+  }
+  
+  /* Active */
+  .button:active:not(:disabled) {
+    background: #487773;
+  }
+  
+  /* Disabled */
+  .button:disabled {
+    background: #d9d9d9;
+    cursor: not-allowed;
+  }
