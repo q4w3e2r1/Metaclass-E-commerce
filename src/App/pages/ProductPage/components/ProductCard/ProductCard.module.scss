@@ -12,34 +12,6 @@
 
 
 
-.relatedProducts {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, auto));
-    gap: 30px 79px;
-    width: 100%;
-    max-width: 1240px;
-    justify-content: center;
-
-
-    @include mixins.respond('md'){  
-        justify-content: space-around;
-    }
-}
-
-.related{
-    display: flex;
-    flex-direction: column;
-    gap:32px;
-}
-
-
-.tytle{
-    font-weight: 700;
-    font-style: bold;
-    font-size: 32px;
-    line-height: 48px;
-}
-
 .main {
     width: 100%;
     display: flex;
@@ -57,7 +29,6 @@
         min-width: 200px;
         height: auto;
         object-fit: contain;
-        aspect-ratio: 1 / 1;
         margin: 0 auto;
     }
 }
@@ -65,34 +36,48 @@
 .content {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    align-items: center;
+
+    @include mixins.respond('md'){  
+        max-width: 650px;
+        align-items: start;
+    }
+
 
     .title {
         font-weight: 700;
         font-style: bold;
-        font-size: 24px;
-        line-height: 24px;
+        font-size: 28px;
+        line-height: 30px;
         margin-bottom: 24px;
-        text-wrap: nowrap;
+        margin-bottom: 24px;
 
         @include mixins.respond('md'){  
-            justify-content: space-around;
-            font-size: 36px;
-            line-height: 36px;
+            text-wrap: nowrap;
+            font-size: 32px;
+            line-height: 32px;
+            margin: 0;
+            margin-bottom: 24px;
         }
 
         
         @include mixins.respond('lg'){  
-            justify-content: space-around;
             font-size: 44px;
             line-height: 48px;
         }
     }
 
     .description{
-        font-size: 20px;
-        line-height: 24px;
+        font-size: 18px;
+        line-height: 20px;
         color: #AFADB5;
         margin-bottom: 56px;
+
+        @include mixins.respond('lg'){  
+            font-size: 20px;
+            line-height: 24px;
+        }
     }
 
     .price {

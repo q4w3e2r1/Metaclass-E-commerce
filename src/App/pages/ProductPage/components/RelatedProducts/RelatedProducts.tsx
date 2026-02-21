@@ -1,32 +1,33 @@
 
-import { Button, Card } from '../../../../../components'
-import styles from './ProductsList.module.scss'
-import { useProducts } from "../../../../../hooks/products/useProducts";
-import { Link } from "react-router-dom";
 
-export const ProductsList = () => {
-    const { data, isLoading } = useProducts(
-        {
-            pagination : {
-                withCount: true,
-                pageSize: 20
-            }
-        }
+import { Link } from 'react-router-dom';
+import { Button, Card } from '../../../../../components'
+import { useProductsByCategory } from '../../../../../hooks/products/useProductsByCategory';
+import styles from './RelatedProducts.module.scss'
+
+type RelatedProductsProps = {
+    categoryId: number, 
+    excludeDocumentId: string
+}
+
+
+
+export const RelatedProducts = ({categoryId, excludeDocumentId}: RelatedProductsProps) => {
+
+    const { data, isLoading } = useProductsByCategory(
+        categoryId,
+        excludeDocumentId
     );
+
 
     if (isLoading) return <div>Loading...</div>;
 
     const products = data?.items ?? [];
 
-
     return (
-        <div className={styles.list}>
-
-            <div className={styles.results}>
-                <h2 className={styles.total}>Total products</h2>
-                <div className={styles.amount}>{data?.total ?? 0}</div>
-            </div>
-            <div className={styles.listCards}>
+        <div className={styles.related}>
+                <div className={styles.title}>Related items</div>
+                <div className={styles.relatedProducts}>
                 {products.map((product: any)=> {
                     const imageUrl =
                     product.images?.[0]?.formats?.small?.url ||
@@ -55,11 +56,10 @@ export const ProductsList = () => {
                         </Link>
                     )
                 })}
-            </div>
 
-            <div className={styles.pagination}>Pagination</div>
-        </div>
+                </div>
+            </div>
     )
 }
 
-export default ProductsList
+export default RelatedProducts

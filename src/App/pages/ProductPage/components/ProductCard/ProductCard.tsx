@@ -1,17 +1,35 @@
 
+import { useParams } from 'react-router-dom';
 import { Button, Card } from '../../../../../components';
+import { useProduct } from '../../../../../hooks/products/useProduct';
+//import { Button, Card } from 'components';
 import styles from './ProductCard.module.scss'
+import RelatedProducts from '../RelatedProducts';
 
 export const ProductCard = () => {
+
+    const { productId } = useParams();
+
+    const { data, isLoading } = useProduct(productId);
+
+    if (isLoading) return <div>Loading...</div>;
+
+
+
+
+    const imageUrl =
+    data.images?.[0]?.formats?.large?.url ||
+    data.images?.[0]?.url ||
+    "";
 
     return(
         <div className={styles.card}>
             <div className={styles.main}>
-                <img src="/Rectangle 23.png" alt="" />
+                <img src={imageUrl} alt="" />
                 <div className={styles.content}>
-                    <div className={styles.title}>White Aesthetic Chair</div>
-                    <div className={styles.description}>Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support</div>
-                    <div className={styles.price}>$99.98</div>
+                    <div className={styles.title}>{data.title}</div>
+                    <div className={styles.description}>{data.description}</div>
+                    <div className={styles.price}>${data.price}</div>
                     <div className={styles.buttons}>
                         <Button>Buy now</Button>
                         <Button>Add to Cart</Button>
@@ -19,15 +37,7 @@ export const ProductCard = () => {
                 </div>
             </div>
 
-            <div className={styles.related}>
-                <div className={styles.tytle}>Related items</div>
-                <div className={styles.relatedProducts}>
-                <Card image='/Rectangle 23.png' title='Заголовок карточки' subtitle='ОписаниеОписаниеОписаниеОписаниеОписание'></Card>
-                <Card image='/Rectangle 23.png' title='Заголовок карточки' subtitle='ОписаниеОписаниеОписаниеОписаниеОписание'></Card>
-                <Card image='/Rectangle 23.png' title='Заголовок карточки' subtitle='ОписаниеОписаниеОписаниеОписаниеОписание'></Card>
-
-                </div>
-            </div>
+            <RelatedProducts categoryId={data.productCategory.id} excludeDocumentId={data.documentId}/>
         </div>
     )
 }

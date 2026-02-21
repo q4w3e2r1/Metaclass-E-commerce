@@ -4,6 +4,10 @@
     box-sizing: border-box;
     cursor: pointer;
     transition: box-shadow 0.15s ease-in-out;
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
   
   .hovered {
@@ -18,11 +22,12 @@
   }
   
   .contentCard {
-    padding: 24px 12px;
+    padding: 48px 12px;
   
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    justify-content: space-between;
+    flex: 1;
   }
   
   .contentText {
@@ -32,6 +37,7 @@
   }
   
   .footer {
+    margin-top: 48px;
     display: flex;
     justify-content: space-between;
     align-items: center;
