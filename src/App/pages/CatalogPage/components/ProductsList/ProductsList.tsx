@@ -5,6 +5,7 @@ import { useProducts } from "../../../../../hooks/products/useProducts";
 import { Link } from "react-router-dom";
 
 export const ProductsList = () => {
+
     const { data, isLoading } = useProducts(
         {
             pagination : {
@@ -28,10 +29,12 @@ export const ProductsList = () => {
             </div>
             <div className={styles.listCards}>
                 {products.map((product: any)=> {
+                    
                     const imageUrl =
                     product.images?.[0]?.formats?.small?.url ||
                     product.images?.[0]?.url ||
                     "";
+
                     return (
                         <Link
                         key={product.documentId}
@@ -56,7 +59,6 @@ export const ProductsList = () => {
                     )
                 })}
             </div>
-
             <div className={styles.pagination}>Pagination</div>
         </div>
     )

@@ -1,4 +1,4 @@
-
+@use 'styles/variables';
 
 .productPage {
     padding: 0 20px;
@@ -11,7 +11,7 @@
     margin-top: 60px;
     display: flex;
     flex-direction: column;
-    gap:32px;
+    gap:variables.$space-l;
     justify-content: start;
 }
 

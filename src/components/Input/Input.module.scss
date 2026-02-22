@@ -1,3 +1,5 @@
+@use 'styles/variables';
+
 .wrapper {
     position: relative;
     display: block;
@@ -9,7 +11,7 @@
     height: 52px;
   
     margin: 0;
-    padding: 16px 12px;
+    padding: variables.$space-s variables.$space-xs;
     box-sizing: border-box;
   
     border: none;
@@ -19,7 +21,7 @@
     line-height: 20px;
     font-weight: 400;
   
-    color: #000000;
+    color: variables.$color-text-primary;
   
     outline: none;
   
@@ -30,22 +32,18 @@
     transition: border 0.15s ease-in-out;
   }
   
-  /* Если есть afterSlot */
   .withSlot {
     padding-right: 44px;
   }
   
-  /* Focus */
   .input:focus {
-    border: 1px solid #518581;
+    border: 1px solid variables.$color-brand;
   }
   
-  /* Disabled */
   .input:disabled {
     color: #afadb5;
   }
   
-  /* Правый слот */
   .afterSlot {
     position: absolute;
     right: 12px;

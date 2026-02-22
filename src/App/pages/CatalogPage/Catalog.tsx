@@ -14,7 +14,6 @@ export const CatalogPage = () => {
       <div className={styles.root}>
         <CatalogHeader />
         <CatalogSearch />
-
         <ProductsList />
       </div>
     </div>

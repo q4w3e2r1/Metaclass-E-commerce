@@ -1,3 +1,5 @@
+@use 'styles/variables';
+
 .loader {
     display: inline-block;
   }
@@ -18,7 +20,7 @@
   }
   
   .defaultColor .path {
-    fill: #518581;
+    fill: variables.$color-brand;
   }
   
   .changeColor {

@@ -1,6 +1,6 @@
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowDownIcon } from '../../../components';
+import { ArrowDownIcon } from 'components';
 import styles from './ProductPage.module.scss'
 import ProductCard from './components/ProductCard';
 import { useScrollRestoration } from '../../../hooks/useScrollRestor';
@@ -28,7 +28,6 @@ export const ProductPage = () => {
         Назад
       </div>
       <ProductCard />
-
       </div>
     </div>);
 };

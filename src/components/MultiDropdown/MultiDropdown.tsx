@@ -84,6 +84,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     <div
       ref={containerRef}
       className={`${styles.container} ${className}`}
+      onClick={handleToggleDropdown}
     >
       <Input
         value={inputValue}
@@ -91,7 +92,6 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
           if (!isOpen) return;
           setSearch(value);
         }}
-        onClick={handleToggleDropdown}
         afterSlot={<ArrowDownIcon color="secondary" />}
         disabled={disabled}
         placeholder={!hasSelectedOptions ? titleText : undefined}

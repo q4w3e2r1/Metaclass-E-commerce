@@ -1,8 +1,9 @@
+@use 'styles/variables';
+
 .text {
     margin: 0;
   }
   
-  /* View sizes */
   .title {
     font-size: 44px;
     line-height: 48px;
@@ -39,7 +40,6 @@
     font-weight: 400;
   }
   
-  /* Font weights */
   .weight-normal {
     font-weight: 400 !important;
   }
@@ -52,9 +52,8 @@
     font-weight: 700 !important;
   }
   
-  /* Colors */
   .color-primary {
-    color: #000000;
+    color: variables.$color-text-primary;
   }
   
   .color-secondary {
@@ -62,7 +61,7 @@
   }
   
   .color-accent {
-    color: #518581;
+    color: variables.$color-brand;
   }
   
   .maxLines {

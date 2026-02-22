@@ -1,4 +1,5 @@
 @use 'styles/mixins';
+@use 'styles/variables';
 
 .header {
     margin-top: 50px;
@@ -7,7 +8,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap:24px;
+    gap:variables.$space-m;
 
     @include mixins.respond('md'){
         margin-top: 100px;
@@ -19,7 +20,7 @@
     font-weight: 700;
     font-style: bold;
     font-size: 44px;
-    line-height: 48px;
+    line-height: variables.$space-xl;
 }
 
 .description {

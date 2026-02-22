@@ -6,7 +6,7 @@
     max-width: 1300px;
     display: flex;
     flex-direction: column;
-    gap:48px;
+    gap:variables.$space-xl;
 }
 
 
@@ -16,7 +16,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap:48px;
+    gap:variables.$space-xl;
     align-items: start;
 
     @include mixins.respond('md'){  
@@ -50,21 +50,21 @@
         font-style: bold;
         font-size: 28px;
         line-height: 30px;
-        margin-bottom: 24px;
-        margin-bottom: 24px;
+        margin-bottom: variables.$space-m;
+        margin-bottom: variables.$space-m;
 
         @include mixins.respond('md'){  
             text-wrap: nowrap;
             font-size: 32px;
             line-height: 32px;
             margin: 0;
-            margin-bottom: 24px;
+            margin-bottom: variables.$space-m;
         }
 
         
         @include mixins.respond('lg'){  
             font-size: 44px;
-            line-height: 48px;
+            line-height: variables.$space-xl;
         }
     }
 
@@ -84,13 +84,13 @@
         font-weight: 700;
         font-style: bold;
         font-size: 44px;
-        line-height: 48px;
-        margin-bottom: 48px;
+        line-height: variables.$space-xl;
+        margin-bottom: variables.$space-xl;
     }
 
     .buttons {
         display: flex;
-        gap: 48px;
+        gap: variables.$space-xl;
 
     }
 }

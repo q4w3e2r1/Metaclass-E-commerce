@@ -1,8 +1,7 @@
 
 import { useParams } from 'react-router-dom';
-import { Button, Card } from '../../../../../components';
 import { useProduct } from '../../../../../hooks/products/useProduct';
-//import { Button, Card } from 'components';
+import { Button } from 'components';
 import styles from './ProductCard.module.scss'
 import RelatedProducts from '../RelatedProducts';
 
@@ -13,9 +12,6 @@ export const ProductCard = () => {
     const { data, isLoading } = useProduct(productId);
 
     if (isLoading) return <div>Loading...</div>;
-
-
-
 
     const imageUrl =
     data.images?.[0]?.formats?.large?.url ||

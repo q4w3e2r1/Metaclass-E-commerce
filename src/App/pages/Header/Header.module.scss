@@ -62,13 +62,13 @@
     @include mixins.respond('md'){
         width: 35%;
         justify-content: none;
-        gap:48px;
+        gap:variables.$space-xl;
         font-size: 18px;
     }
 
     @include mixins.respond('xl'){
         width: 35%;
-        gap:48px;
+        gap:variables.$space-xl;
     }
 
 
