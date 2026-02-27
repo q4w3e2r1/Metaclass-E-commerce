@@ -16,6 +16,20 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components": ["src/components/common/index.ts"],
+      "@components/*": ["src/components/common/*"],
+      "config": ["src/config/index"],
+      "config/*": ["src/config/*"],
+      "styles": ["src/styles/index"],
+      "styles/*": ["src/styles/*"],
+      "utils": ["src/utils/index"],
+      "utils/*": ["src/utils/*"],
+      "@hooks/*": ["src/hooks/*"]
+    },
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,

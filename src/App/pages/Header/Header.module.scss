@@ -1,7 +1,20 @@
 @use 'styles/variables';
 @use 'styles/mixins';
 
-.contaier {
+
+.header {
+    border-bottom: 2px solid #F3F3F3;
+    background-color: #ffffff;
+    padding: 0 20px;
+    width: 100%;
+
+    @media (max-width: 450px) {
+       padding: 0 5px;
+    }
+}
+
+
+.container {
 
 
     display: flex;
@@ -13,13 +26,6 @@
     max-width: 1240px;
     margin: 0 auto;
     gap:5px;
-
-    @include mixins.respond('md'){
-
-    }
-
-    @include mixins.respond('xl'){
-    }
 
 }
 
@@ -91,11 +97,24 @@
 
     img {
         cursor: pointer;
+        width: 30px;
+        height: 30px;
+        transition: all 0.3s ease;
+
+        @media (max-width: 400px) {
+            width: 25px;
+            height: 25px;
+        }
     }
 
     @include mixins.respond('md'){
         gap: 1.5rem;
         width: 119px;
+
+        img {
+            width: 30px;
+            height: 30px;
+        }
     }
 
 

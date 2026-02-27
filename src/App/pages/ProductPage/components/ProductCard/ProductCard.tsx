@@ -1,7 +1,7 @@
 
 import { useParams } from 'react-router-dom';
-import { useProduct } from '../../../../../hooks/products/useProduct';
-import { Button } from 'components';
+import { useProduct } from '@hooks/products/useProductQuery';
+import { Button } from '@components';
 import styles from './ProductCard.module.scss'
 import RelatedProducts from '../RelatedProducts';
 

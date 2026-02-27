@@ -1,8 +1,8 @@
 
 
 import { Link } from 'react-router-dom';
-import { Button, Card } from '../../../../../components'
-import { useProductsByCategory } from '../../../../../hooks/products/useProductsByCategory';
+import { Button, Card } from '@components'
+import { useRelatedProductsByCategory } from '@hooks/products/useRelatedProductsByCategoryQuery';
 import styles from './RelatedProducts.module.scss'
 
 type RelatedProductsProps = {
@@ -14,7 +14,7 @@ type RelatedProductsProps = {
 
 export const RelatedProducts = ({categoryId, excludeDocumentId}: RelatedProductsProps) => {
 
-    const { data, isLoading } = useProductsByCategory(
+    const { data, isLoading } = useRelatedProductsByCategory(
         categoryId,
         excludeDocumentId
     );

@@ -1,9 +1,9 @@
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowDownIcon } from 'components';
+import { ArrowDownIcon } from '@components';
 import styles from './ProductPage.module.scss'
 import ProductCard from './components/ProductCard';
-import { useScrollRestoration } from '../../../hooks/useScrollRestor';
+import { useScrollRestoration } from '@hooks/useScrollRestor';
 
 export const ProductPage = () => {
 
@@ -16,14 +16,7 @@ export const ProductPage = () => {
     <div className={styles.product}>
       <div 
         className={styles.backward}
-        onClick={()=>{
-          if (window.history.length > 1) {
-            navigate("/product"); //navigate(-1);
-          } else {
-            navigate("/product");
-          }
-        }}
-        >
+        onClick={()=>{navigate("/product/")}}>
         <div className={styles.icon}><ArrowDownIcon /></div>
         Назад
       </div>

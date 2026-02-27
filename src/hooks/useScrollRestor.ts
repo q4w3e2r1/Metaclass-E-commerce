@@ -7,7 +7,7 @@ export const useScrollRestoration = () => {
   const location = useLocation();
   const path = location.pathname;
 
-  const isCatalogPage = path === "/products";
+  const isCatalogPage = path === "/products/";
 
   useEffect(() => {
     if (isCatalogPage) {

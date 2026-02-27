@@ -4,18 +4,4 @@
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
-  "compilerOptions": {
-    "moduleResolution": "node",
-    "baseUrl": ".",
-    "paths": {
-      "components": ["src/components/index"],
-      "components/*": ["src/components/*"],
-      "config": ["src/config/index"],
-      "config/*": ["src/config/*"],
-      "styles": ["src/styles/index"],
-      "styles/*": ["src/styles/*"],
-      "utils": ["src/utils/index"],
-      "utils/*": ["src/utils/*"]
-    }
-  }
 }

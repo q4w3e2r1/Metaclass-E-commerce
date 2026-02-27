@@ -46,7 +46,7 @@ export const getProductById = async (documentId: string) => {
 };
 
 
-export const getProductsByCategory = async (
+export const getRelatedProductsByCategory = async (
   categoryId: number,
   excludeDocumentId?: string
 ) => {

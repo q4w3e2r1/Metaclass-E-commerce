@@ -51,6 +51,11 @@ export default defineConfig([
     },
     settings: {
       react: { version: 'detect' },
+      'import/resolver': {
+        typescript: {
+          project: './tsconfig.app.json'
+        }
+      }
     },
     rules: {
       'eol-last': ['error', 'always'],

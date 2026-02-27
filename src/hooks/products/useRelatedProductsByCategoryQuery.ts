@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import { getProductsByCategory } from "../../api/products";
+import { getRelatedProductsByCategory } from "../../api/products";
 
-export const useProductsByCategory = (
-    categoryId?: number,
+export const useRelatedProductsByCategory = (
+    categoryId: number,
     excludeDocumentId?: string
   ) => {
     return useQuery({
       queryKey: ["products", "category", categoryId, excludeDocumentId],
       queryFn: () =>
-        getProductsByCategory(categoryId!, excludeDocumentId),
+        getRelatedProductsByCategory(categoryId, excludeDocumentId),
       enabled: Boolean(categoryId),
     });
   };

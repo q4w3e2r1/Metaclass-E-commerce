@@ -1,6 +1,6 @@
 import React from 'react';
 import Input from '../Input';
-import {ArrowDownIcon} from '../index';
+import ArrowDownIcon from '../ArrowDownIcon';
 import styles from './MultiDropdown.module.scss';
 
 export type Option = {
@@ -15,6 +15,7 @@ export type MultiDropdownProps = {
   onChange: (value: Option[]) => void;
   disabled?: boolean;
   getTitle: (value: Option[]) => string;
+  placeholder?: string;
 };
 
 const MultiDropdown: React.FC<MultiDropdownProps> = ({

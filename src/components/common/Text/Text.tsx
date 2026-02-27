@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './Text.module.scss';
 
 export type TextProps = {
@@ -20,21 +20,24 @@ const Text: React.FC<TextProps> = ({
   color,
   maxLines,
 }) => {
-  const Tag = tag ?? 'p';
 
-  // Собираем классы
-  const classNames = [
-    styles.text,
-    view ? styles[view] : '',
-    weight ? styles[`weight-${weight}`] : '',
-    color ? styles[`color-${color}`] : '',
-    maxLines ? styles['maxLines'] : '',
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const Tag = tag ?? 'span';
 
-  // Для maxLines inline нужен WebkitLineClamp
+  const classNames = useMemo(
+    () =>
+      [
+        styles.text,
+        view && styles[view],
+        weight && styles[`weight-${weight}`],
+        color && styles[`color-${color}`],
+        maxLines && styles.maxLines,
+        className,
+      ]
+        .filter(Boolean)
+        .join(' '),
+    [view, weight, color, maxLines, className, styles]
+  );
+
   const style = maxLines
     ? { WebkitLineClamp: maxLines }
     : undefined;

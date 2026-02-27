@@ -1,7 +1,7 @@
 
-import { Button, Card } from '../../../../../components'
+import { Button, Card } from '@components'
 import styles from './ProductsList.module.scss'
-import { useProducts } from "../../../../../hooks/products/useProducts";
+import { useProducts } from "@hooks/products/useProductsQuery";
 import { Link } from "react-router-dom";
 
 export const ProductsList = () => {

@@ -7,10 +7,8 @@ function App() {
 
   return (
     <div className={styles.main}>
-      <header className={styles.header}>
         <Header/>
-      </header>
-      <Outlet />
+        <Outlet />
     </div>
   )
 }

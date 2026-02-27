@@ -1,19 +1,21 @@
 
 import { useState } from 'react'
 
-import { Button, Input, MultiDropdown } from 'components'
-import type {Option} from 'components/MultiDropdown'
+import { Button, Input, MultiDropdown } from '@components'
+import mockOptions from './config'
 
 import styles from './CatalogSerach.module.scss'
+
+export type Option = {
+    key: string;
+    value: string;
+  };
+  
 
 export const CatalogSearch = () => {
 
     const [searchValue, setSearchValue] = useState('')
 
-    const mockOptions: Option[] = [
-        { key: '1', value: 'Электроника' },
-        { key: '2', value: 'Одежда' }
-    ]
 
     const [selectedCategories, setSelectedCategories] = useState<Option[]>([])
 
@@ -29,7 +31,6 @@ export const CatalogSearch = () => {
 
     const handleSearchChange = (value: string) => {
         setSearchValue(value)
-        console.log("Search value:", value)
     }
 
     const handleSearchSubmit = () => {
