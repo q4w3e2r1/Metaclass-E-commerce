@@ -1,0 +1,52 @@
+@use 'styles/variables';
+
+.wrapper {
+    position: relative;
+    display: block;
+    width: 100%;  
+  }
+  
+  .input {
+    width: 100%;
+    height: 52px;
+  
+    margin: 0;
+    padding: variables.$space-s variables.$space-xs;
+    box-sizing: border-box;
+  
+    border: none;
+    background-color: #ffffff;
+  
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+  
+    color: variables.$color-text-primary;
+  
+    outline: none;
+  
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  
+    transition: border 0.15s ease-in-out;
+  }
+  
+  .withSlot {
+    padding-right: 44px;
+  }
+  
+  .input:focus {
+    border: 1px solid variables.$color-brand;
+  }
+  
+  .input:disabled {
+    color: #afadb5;
+  }
+  
+  .afterSlot {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+  }

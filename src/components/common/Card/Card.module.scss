@@ -1,0 +1,58 @@
+@use 'styles/variables';
+
+.card {
+    max-width: 360px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: box-shadow 0.15s ease-in-out;
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .hovered {
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
+  }
+  
+  .image {
+    background-color: #d9d9d9;
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .contentCard {
+    padding: variables.$space-xl variables.$space-xs;
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+  }
+  
+  .contentText {
+    display: flex;
+    flex-direction: column;
+    gap: variables.$space-xxs;
+  }
+  
+  .footer {
+    margin-top: variables.$space-xl;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 52px;
+    flex-direction: row;
+  }
+  
+  .contentSlot {
+    color: variables.$color-text-primary;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    letter-spacing: 0;
+    max-width: 203px;
+    overflow: hidden;
+  }

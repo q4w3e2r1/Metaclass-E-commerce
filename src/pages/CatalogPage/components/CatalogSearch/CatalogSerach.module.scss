@@ -1,0 +1,34 @@
+@use 'styles/mixins';
+@use 'styles/variables';
+
+.root {
+    margin-top: 50px;
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:variables.$space-m;
+}
+
+
+.search {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+    width: 100%;
+
+    @include mixins.respond('md'){
+        flex-direction: row;
+        justify-content: space-between;
+        gap:variables.$space-m;
+    }
+
+}
+
+.categories{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+}

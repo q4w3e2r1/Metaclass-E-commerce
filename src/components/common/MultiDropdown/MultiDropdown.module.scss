@@ -1,0 +1,45 @@
+@use 'styles/variables';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: variables.$space-xxs;
+    max-width: 350px;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
+    z-index: 1000;
+    margin-top: 4px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .option {
+    box-sizing: border-box;
+    height: 48px;
+    padding: 14px variables.$space-xxs;
+    font-size: 16px;
+    line-height: 20px;
+    cursor: pointer;
+    color: variables.$color-text-primary;
+  
+    display: flex;
+    align-items: center;
+  }
+  
+  .option:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+  
+  .selected {
+    color: variables.$color-brand;
+  }

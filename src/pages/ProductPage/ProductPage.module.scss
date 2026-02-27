@@ -1,0 +1,32 @@
+@use 'styles/variables';
+
+.productPage {
+    padding: 0 20px;
+
+}
+
+.product {
+    max-width: 1300px;
+    margin-left: calc((100% - min(1240px, 100%)) / 2);
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap:variables.$space-l;
+    justify-content: start;
+}
+
+.backward {
+    font-size: 20px;
+    line-height: 24px;
+    display: flex;
+    flex-direction: row;
+    width: 120px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.icon {
+    transform: rotate(90deg);
+}

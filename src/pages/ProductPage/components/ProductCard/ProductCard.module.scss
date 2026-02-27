@@ -1,0 +1,95 @@
+@use 'styles/variables';
+@use 'styles/mixins';
+
+.card {
+    width: 100%;
+    max-width: 1300px;
+    display: flex;
+    flex-direction: column;
+    gap:variables.$space-xl;
+}
+
+
+
+
+.main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap:variables.$space-xl;
+    align-items: start;
+
+    @include mixins.respond('md'){  
+        flex-direction: row;
+    }
+
+    img{
+        width: 100%;
+        max-width: 600px;
+        min-width: 200px;
+        height: auto;
+        object-fit: contain;
+        margin: 0 auto;
+    }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+
+    @include mixins.respond('md'){  
+        max-width: 650px;
+        align-items: start;
+    }
+
+
+    .title {
+        font-weight: 700;
+        font-style: bold;
+        font-size: 28px;
+        line-height: 30px;
+        margin-bottom: variables.$space-m;
+        margin-bottom: variables.$space-m;
+
+        @include mixins.respond('md'){  
+            font-size: 32px;
+            line-height: 32px;
+            margin: 0;
+            margin-bottom: variables.$space-m;
+        }
+
+        
+        @include mixins.respond('lg'){  
+            font-size: 44px;
+            line-height: variables.$space-xl;
+        }
+    }
+
+    .description{
+        font-size: 18px;
+        line-height: 20px;
+        color: #AFADB5;
+        margin-bottom: 56px;
+
+        @include mixins.respond('lg'){  
+            font-size: 20px;
+            line-height: 24px;
+        }
+    }
+
+    .price {
+        font-weight: 700;
+        font-style: bold;
+        font-size: 44px;
+        line-height: variables.$space-xl;
+        margin-bottom: variables.$space-xl;
+    }
+
+    .buttons {
+        display: flex;
+        gap: variables.$space-xl;
+
+    }
+}

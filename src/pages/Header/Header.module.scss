@@ -1,0 +1,121 @@
+@use 'styles/variables';
+@use 'styles/mixins';
+
+
+.header {
+    border-bottom: 2px solid #F3F3F3;
+    background-color: #ffffff;
+    padding: 0 20px;
+    width: 100%;
+
+    @media (max-width: 450px) {
+       padding: 0 5px;
+    }
+}
+
+
+.container {
+
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    height: 90px;
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    gap:5px;
+
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+
+    @include mixins.respond('md'){
+        flex-direction:row;
+    }
+
+    img {
+        width: 100%;
+        max-width: fit-content;
+
+    }
+
+
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    justify-content: space-between;
+    padding: 0 1px;
+    text-wrap: nowrap;
+    margin: 0 auto;
+    
+    min-width: fit-content;
+    max-width: 339px;
+
+    width: 50%;
+    gap:5px;
+
+    font-size: 17px;
+
+    @include mixins.respond('md'){
+        width: 35%;
+        justify-content: none;
+        gap:variables.$space-xl;
+        font-size: 18px;
+    }
+
+    @include mixins.respond('xl'){
+        width: 35%;
+        gap:variables.$space-xl;
+    }
+
+
+
+    li {
+        cursor: pointer;
+
+        &.active {
+            color: variables.$color-brand;
+        }
+
+    }
+}
+
+.user-tools{
+    width: 77px;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: right;
+
+    img {
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        transition: all 0.3s ease;
+
+        @media (max-width: 400px) {
+            width: 25px;
+            height: 25px;
+        }
+    }
+
+    @include mixins.respond('md'){
+        gap: 1.5rem;
+        width: 119px;
+
+        img {
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+
+}

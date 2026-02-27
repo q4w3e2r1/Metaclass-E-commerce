@@ -1,0 +1,72 @@
+@use 'styles/variables';
+
+.text {
+    margin: 0;
+  }
+  
+  .title {
+    font-size: 44px;
+    line-height: 48px;
+    font-weight: 700;
+  }
+  
+  .button {
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: 400;
+  }
+  
+  .p-20 {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+  
+  .p-18 {
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 400;
+  }
+  
+  .p-16 {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+  
+  .p-14 {
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
+  }
+  
+  .weight-normal {
+    font-weight: 400 !important;
+  }
+  
+  .weight-medium {
+    font-weight: 500 !important;
+  }
+  
+  .weight-bold {
+    font-weight: 700 !important;
+  }
+  
+  .color-primary {
+    color: variables.$color-text-primary;
+  }
+  
+  .color-secondary {
+    color: #AFADB5;
+  }
+  
+  .color-accent {
+    color: variables.$color-brand;
+  }
+  
+  .maxLines {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

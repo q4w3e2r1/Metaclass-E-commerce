@@ -1,0 +1,30 @@
+@use 'styles/mixins';
+@use 'styles/variables';
+
+.relatedProducts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+    gap: 30px 79px;
+    width: 100%;
+    max-width: 1240px;
+    justify-content: center;
+
+
+    @include mixins.respond('md'){  
+        justify-content: space-around;
+    }
+}
+
+.related{
+    display: flex;
+    flex-direction: column;
+    gap:variables.$space-l;
+}
+
+
+.title{
+    font-weight: 700;
+    font-style: bold;
+    font-size: 32px;
+    line-height: 48px;
+}
