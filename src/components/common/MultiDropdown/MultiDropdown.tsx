@@ -50,6 +50,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     } else {
       onChange([...value, option]);
     }
+    setSearch('');
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -95,7 +96,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
         }}
         afterSlot={<ArrowDownIcon color="secondary" />}
         disabled={disabled}
-        placeholder={!hasSelectedOptions ? titleText : undefined}
+        placeholder={hasSelectedOptions ? titleText : getTitle([])}
       />
 
       {isOpen && !disabled && (

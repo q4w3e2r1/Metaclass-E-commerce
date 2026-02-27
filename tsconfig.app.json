@@ -21,6 +21,7 @@
       "@/*": ["src/*"],
       "@components": ["src/components/common/index.ts"],
       "@components/*": ["src/components/common/*"],
+      "@pages/*": ["src/pages/*"],
       "config": ["src/config/index"],
       "config/*": ["src/config/*"],
       "styles": ["src/styles/index"],

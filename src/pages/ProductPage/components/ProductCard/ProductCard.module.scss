@@ -54,7 +54,6 @@
         margin-bottom: variables.$space-m;
 
         @include mixins.respond('md'){  
-            text-wrap: nowrap;
             font-size: 32px;
             line-height: 32px;
             margin: 0;

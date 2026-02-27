@@ -1,9 +1,9 @@
 import type { RouteObject } from "react-router";
-import App from "../App";
+import App from "@/components/special/App";
 import { Navigate } from "react-router";
 import { routes } from "./routes";
-import CatalogPage from "../App/pages/CatalogPage";
-import ProductPage from "../App/pages/ProductPage";
+import CatalogPage from "../pages/CatalogPage";
+import ProductPage from "../pages/ProductPage";
 
 export const routesConfig: RouteObject[] = [
   {
