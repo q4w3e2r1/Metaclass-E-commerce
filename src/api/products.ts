@@ -77,3 +77,42 @@ export const getRelatedProductsByCategory = async (
     pagination: data.meta?.pagination,
   };
 };
+
+type GetInfiniteProductsParams = {
+  page: number;
+  pageSize: number;
+  categories?: string[];
+};
+
+export const getProductsInfinite = async ({
+  page,
+  pageSize,
+  categories,
+}: GetInfiniteProductsParams) => {
+  const query = buildQuery({
+    populate: ["images", "productCategory"],
+    pagination: {
+      page,
+      pageSize,
+      withCount: true,
+    },
+    ...(categories && categories.length > 0 && {
+      filters: {
+        productCategory: {
+          id: {
+            $in: categories,
+          },
+        },
+      },
+    }),
+  });
+
+  const { data } = await api.get(
+    `/products?${query}`
+  );
+
+  return {
+    items: data.data,
+    pagination: data.meta?.pagination,
+  };
+};

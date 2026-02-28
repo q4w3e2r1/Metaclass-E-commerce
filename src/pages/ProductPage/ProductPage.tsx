@@ -10,13 +10,21 @@ export const ProductPage = () => {
   const navigate = useNavigate();
   useScrollRestoration()
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate("/");
+    }
+  };
+
   return(
   <div className={styles.productPage}>
     
     <div className={styles.product}>
       <div 
         className={styles.backward}
-        onClick={()=>{navigate("/product/")}}>
+        onClick={handleBack}>
         <div className={styles.icon}><ArrowDownIcon /></div>
         Назад
       </div>

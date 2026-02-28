@@ -4,8 +4,8 @@ export const routes = {
     create: () => "/",
   },
   products: {
-    mask: "products",
-    create: () => "/products",
+    mask: "products/",
+    create: () => "/products/",
   },
   product: {
     mask: "products/:productId",
