@@ -17,7 +17,11 @@ export const CatalogSearch = () => {
     const [searchValue, setSearchValue] = useState('')
     const { data, isLoading } = useProductCategories();
     const [searchParams, setSearchParams] = useSearchParams();
-    
+    const searchParam = searchParams.get("search") ?? "";
+
+    useEffect(() => {
+      setSearchValue(searchParam);
+    }, [searchParam]);
 
     const categoryMap = useMemo(() => {
         if (!data?.items) return new Map<number, string>();
@@ -84,8 +88,16 @@ export const CatalogSearch = () => {
     }
 
     const handleSearchSubmit = () => {
-        console.log("Searching for:", searchValue)
-    }
+      const newParams = new URLSearchParams(searchParams);
+    
+      if (!searchValue.trim()) {
+        newParams.delete("search");
+      } else {
+        newParams.set("search", searchValue.trim());
+      }
+    
+      setSearchParams(newParams);
+    };
 
     return (
         <div className={styles.root}>

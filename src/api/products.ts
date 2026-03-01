@@ -82,13 +82,32 @@ type GetInfiniteProductsParams = {
   page: number;
   pageSize: number;
   categories?: string[];
+  search?: string;
 };
 
 export const getProductsInfinite = async ({
   page,
   pageSize,
   categories,
+  search,
 }: GetInfiniteProductsParams) => {
+
+  const filters: Record<string, any> = {};
+  
+  if (categories && categories.length > 0) {
+    filters.productCategory = {
+      id: {
+        $in: categories,
+      },
+    };
+  }
+
+  if (search && search.trim().length > 0) {
+    filters.title = {
+      $containsi: search.trim(),
+    };
+  }
+
   const query = buildQuery({
     populate: ["images", "productCategory"],
     pagination: {
@@ -96,15 +115,7 @@ export const getProductsInfinite = async ({
       pageSize,
       withCount: true,
     },
-    ...(categories && categories.length > 0 && {
-      filters: {
-        productCategory: {
-          id: {
-            $in: categories,
-          },
-        },
-      },
-    }),
+    ...(Object.keys(filters).length > 0 && { filters }),
   });
 
   const { data } = await api.get(

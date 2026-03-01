@@ -5,15 +5,19 @@ import { useInfiniteProducts } from "@hooks/products/useInfiniteProducts";
 import { useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useEffect, useMemo, useRef } from 'react';
+import { useCart } from '@/hooks/cart/useCartQuery';
 
 export const ProductsList = () => {
 
     const loaderRef = useRef<HTMLDivElement | null>(null);
-
-    const [searchParams] = useSearchParams();
+    const { cart, addToCart, removeFromCart } = useCart();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const search = searchParams.get("search") ?? "";
     const categoryIds = useMemo(() => {
       return searchParams.get("categories")?.split(",") ?? [];
     }, [searchParams]);
+
+    const observerRef = useRef<IntersectionObserver | null>(null);
 
     const {
         data,
@@ -21,32 +25,34 @@ export const ProductsList = () => {
         hasNextPage,
         isFetchingNextPage,
         isLoading,
-      } = useInfiniteProducts(categoryIds);
+      } = useInfiniteProducts(categoryIds, search);
 
     useEffect(() => {
-        const observer = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting && hasNextPage) {
-              fetchNextPage();
-            }
-          },
-          {
-            root: null,
-            rootMargin: "200px",
-            threshold: 0,
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    
+      observerRef.current = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && hasNextPage) {
+            fetchNextPage();
           }
-        );
-    
-        if (loaderRef.current) {
-          observer.observe(loaderRef.current);
+        },
+        {
+          root: null,
+          rootMargin: "200px",
+          threshold: 0,
         }
+      );
     
-        return () => observer.disconnect();
-      }, [hasNextPage, fetchNextPage]);
-
-
-
-    if (isLoading) return <div>Loading...</div>;
+      if (loaderRef.current) {
+        observerRef.current.observe(loaderRef.current);
+      }
+    
+      return () => {
+        observerRef.current?.disconnect();
+      };
+    }, [hasNextPage, fetchNextPage]);
 
 
     const products =
@@ -54,7 +60,13 @@ export const ProductsList = () => {
 
     const total = data?.pages?.[0]?.pagination?.total ?? 0;
 
+    const cartProductIds = useMemo(() => {
+      if (!Array.isArray(cart)) return new Set<number>();
+      return new Set(cart.map((item: any) => item.product.id));
+    }, [cart]);
 
+
+    if (isLoading) return <div>Loading...</div>;
     return (
         <div className={styles.list}>
 
@@ -65,27 +77,41 @@ export const ProductsList = () => {
             <div className={styles.listCards}>
                 {products.map((product: any)=> {
                     
-                    const imageUrl =
-                    product.images?.[0]?.formats?.small?.url ||
-                    product.images?.[0]?.url ||
-                    "";
+                  const imageUrl =
+                  product.images?.[0]?.formats?.small?.url ||
+                  product.images?.[0]?.url ||
+                  "";
 
-                    return (
-                        <Link
-                        key={product.documentId}
-                        to={`/products/${product.documentId}`}
-                        style={{ textDecoration: "none", color: "inherit" }}
-                        >
-                            <Card
-                                key={product.documentId}
-                                image={imageUrl}
-                                title={product.title}
-                                subtitle={product.description}
-                                contentSlot={<span>{product.price}</span>}
-                                actionSlot={<Button>Add to Card</Button>}
-                            />
-                        </Link>
-                    )
+                  const isInCart = cartProductIds.has(product.id);
+
+                  return (
+                      <Link
+                      key={product.documentId}
+                      to={`/products/${product.documentId}`}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                          <Card
+                              image={imageUrl}
+                              title={product.title}
+                              subtitle={product.description}
+                              contentSlot={<span>{product.price}</span>}
+                              actionSlot={
+                                <Button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    e.preventDefault();
+                                    if (isInCart) {
+                                      removeFromCart(product.id);
+                                    } else {
+                                      addToCart(product.id);
+                                    }
+                                  }}
+                                >
+                                  {isInCart ? "Delete from Cart" : "Add to Cart"}
+                                </Button>}
+                          />
+                      </Link>
+                  )
                 })}
             </div>
             
