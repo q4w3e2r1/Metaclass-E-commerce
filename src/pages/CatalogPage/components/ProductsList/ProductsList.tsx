@@ -1,127 +1,122 @@
-
-import { Button, Card } from '@components'
+import { Button, Card, CartButton } from '@components'
 import styles from './ProductsList.module.scss'
 import { useInfiniteProducts } from "@hooks/products/useInfiniteProducts";
-import { useSearchParams } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { useEffect, useMemo, useRef } from 'react';
+import { useSearchParams, Link } from "react-router-dom";
+import { useMemo, Fragment } from 'react';
 import { useCart } from '@/hooks/cart/useCartQuery';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 
 export const ProductsList = () => {
+  const { cart } = useCart();
+  const [searchParams] = useSearchParams();
 
-    const loaderRef = useRef<HTMLDivElement | null>(null);
-    const { cart, addToCart, removeFromCart } = useCart();
-    const [searchParams, setSearchParams] = useSearchParams();
-    const search = searchParams.get("search") ?? "";
-    const categoryIds = useMemo(() => {
-      return searchParams.get("categories")?.split(",") ?? [];
-    }, [searchParams]);
+  const search = searchParams.get("search") ?? "";
+  const categoryIds = useMemo(() => {
+    return searchParams.get("categories")?.split(",").filter(Boolean) ?? [];
+  }, [searchParams]);
 
-    const observerRef = useRef<IntersectionObserver | null>(null);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteProducts(categoryIds, search);
 
-    const {
-        data,
-        fetchNextPage,
-        hasNextPage,
-        isFetchingNextPage,
-        isLoading,
-      } = useInfiniteProducts(categoryIds, search);
+  const totalPages = data?.pages.length ?? 0;
 
-    useEffect(() => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    
-      observerRef.current = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && hasNextPage) {
-            fetchNextPage();
-          }
-        },
-        {
-          root: null,
-          rootMargin: "200px",
-          threshold: 0,
-        }
-      );
-    
-      if (loaderRef.current) {
-        observerRef.current.observe(loaderRef.current);
-      }
-    
-      return () => {
-        observerRef.current?.disconnect();
-      };
-    }, [hasNextPage, fetchNextPage]);
+  const {
+    loaderRef,
+    observePage,
+    isRestoring,
+    targetPageFromUrl
+  } = useInfiniteScroll({
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    totalPages
+  });
 
+  const total = data?.pages?.[0]?.pagination?.total ?? 0;
 
-    const products =
-    data?.pages.flatMap((page) => page.items) ?? [];
+  const cartProductIds = useMemo(() => {
+    if (!Array.isArray(cart)) return new Set<number>();
+    return new Set(cart.map((item: any) => item.product.id));
+  }, [cart]);
 
-    const total = data?.pages?.[0]?.pagination?.total ?? 0;
+  if (isLoading) return <div>Loading...</div>;
 
-    const cartProductIds = useMemo(() => {
-      if (!Array.isArray(cart)) return new Set<number>();
-      return new Set(cart.map((item: any) => item.product.id));
-    }, [cart]);
+  return (
+    <div className={styles.list}>
+      {isRestoring && (
+        <div className={styles.restoringMessage}>
+          Восстанавливаем позицию на странице {targetPageFromUrl}...
+        </div>
+      )}
 
+      <div className={styles.results}>
+        <h2 className={styles.total}>Total products</h2>
+        <div className={styles.amount}>{total}</div>
+      </div>
 
-    if (isLoading) return <div>Loading...</div>;
-    return (
-        <div className={styles.list}>
+      <div className={styles.listCards}>
+        {data?.pages.map((page, pageIndex) => {
+          const pageNumber = pageIndex + 1;
+          
+          return (
+            <Fragment key={pageIndex}>
+              <div
+                data-page={pageNumber}
+                ref={observePage(pageNumber)}
+                className={styles.pageAnchor}
+                aria-hidden="true"
+              />
 
-            <div className={styles.results}>
-                <h2 className={styles.total}>Total products</h2>
-                <div className={styles.amount}>{total ?? 0}</div>
-            </div>
-            <div className={styles.listCards}>
-                {products.map((product: any)=> {
-                    
-                  const imageUrl =
+              {page.items.map((product: any) => {
+                const imageUrl =
                   product.images?.[0]?.formats?.small?.url ||
                   product.images?.[0]?.url ||
                   "";
 
-                  const isInCart = cartProductIds.has(product.id);
+                const isInCart = cartProductIds.has(product.id);
 
-                  return (
-                      <Link
-                      key={product.documentId}
-                      to={`/products/${product.documentId}`}
-                      style={{ textDecoration: "none", color: "inherit" }}
-                      >
-                          <Card
-                              image={imageUrl}
-                              title={product.title}
-                              subtitle={product.description}
-                              contentSlot={<span>{product.price}</span>}
-                              actionSlot={
-                                <Button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    e.preventDefault();
-                                    if (isInCart) {
-                                      removeFromCart(product.id);
-                                    } else {
-                                      addToCart(product.id);
-                                    }
-                                  }}
-                                >
-                                  {isInCart ? "Delete from Cart" : "Add to Cart"}
-                                </Button>}
-                          />
-                      </Link>
-                  )
-                })}
-            </div>
-            
-            {hasNextPage && (
-                <div ref={loaderRef} className={styles.loader}>
-                    {isFetchingNextPage ? "Loading..." : "Scroll to load more"}
-                </div>
-      )}
+                return (
+                  <Link
+                    key={product.documentId}
+                    to={`/products/${product.documentId}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <Card
+                      image={imageUrl}
+                      title={product.title}
+                      subtitle={product.description}
+                      contentSlot={<span>{product.price}</span>}
+                      actionSlot={
+                        <CartButton 
+                        productId={product.id}
+                        isInCart={isInCart}
+                    />
+                      }
+                    />
+                  </Link>
+                );
+              })}
+            </Fragment>
+          );
+        })}
+      </div>
+
+      {hasNextPage && (
+        <div ref={loaderRef} className={styles.loader}>
+          {isFetchingNextPage ? (
+            <span>Loading...</span>
+          ) : (
+            <span>Scroll to load more</span>
+          )}
         </div>
-    )
-}
+      )}
+    </div>
+  );
+};
 
-export default ProductsList
+export default ProductsList;

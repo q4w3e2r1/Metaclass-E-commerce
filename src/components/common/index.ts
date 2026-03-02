@@ -5,3 +5,4 @@ export {default as ArrowDownIcon} from './ArrowDownIcon'
 export { default as MultiDropdown } from './MultiDropdown';
 export { default as Text } from './Text';
 export { default as Card } from './Card';
+export { default as CartButton} from './CartButton';

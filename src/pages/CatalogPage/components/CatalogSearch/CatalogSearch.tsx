@@ -1,8 +1,5 @@
-
 import { useEffect, useMemo, useState } from 'react'
-
 import { Button, Input, MultiDropdown } from '@components'
-
 import styles from './CatalogSerach.module.scss'
 import { useProductCategories } from '@/hooks/categories/useProductCategories';
 import { useSearchParams } from "react-router-dom";
@@ -13,7 +10,6 @@ export type Option = {
   };
   
 export const CatalogSearch = () => {
-
     const [searchValue, setSearchValue] = useState('')
     const { data, isLoading } = useProductCategories();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -25,11 +21,8 @@ export const CatalogSearch = () => {
 
     const categoryMap = useMemo(() => {
         if (!data?.items) return new Map<number, string>();
-      
-        return new Map(
-          data.items.map((c) => [c.id, c.title])
-        );
-      }, [data]);
+        return new Map(data.items.map((c) => [c.id, c.title]));
+    }, [data]);
     
     const categoryOptions: Option[] = useMemo(() => {
         return Array.from(categoryMap.entries()).map(([id, title]) => ({
@@ -39,9 +32,8 @@ export const CatalogSearch = () => {
     }, [categoryMap]);
 
     const categoriesParam = searchParams.get("categories");
-
     const selectedIds = useMemo(() => {
-    return categoriesParam ? categoriesParam.split(",") : [];
+        return categoriesParam ? categoriesParam.split(",") : [];
     }, [categoriesParam]);
 
     const selectedCategories: Option[] = useMemo(() => {
@@ -49,7 +41,6 @@ export const CatalogSearch = () => {
           .map((id) => {
             const title = categoryMap.get(Number(id));
             if (!title) return null;
-      
             return {
               key: id,
               value: title,
@@ -69,18 +60,24 @@ export const CatalogSearch = () => {
     }
 
     const handleCategoriesChange = (selected: Option[]) => {
-        const newParams = new URLSearchParams(searchParams);
-      
-        if (!selected.length) {
-          newParams.delete("categories");
-        } else {
-          newParams.set(
-            "categories",
-            selected.map((o) => o.key).join(",")
-          );
-        }
-      
-        setSearchParams(newParams);
+        // ИСПРАВЛЕНИЕ: используем функцию обновления, чтобы получить актуальные параметры
+        setSearchParams(prev => {
+            const params = new URLSearchParams(prev);
+            
+            if (!selected.length) {
+                params.delete("categories");
+            } else {
+                params.set(
+                    "categories",
+                    selected.map((o) => o.key).join(",")
+                );
+            }
+            
+            // Сбрасываем page при изменении фильтров
+            params.delete("page");
+            
+            return params;
+        });
     };
 
     const handleSearchChange = (value: string) => {
@@ -88,15 +85,21 @@ export const CatalogSearch = () => {
     }
 
     const handleSearchSubmit = () => {
-      const newParams = new URLSearchParams(searchParams);
-    
-      if (!searchValue.trim()) {
-        newParams.delete("search");
-      } else {
-        newParams.set("search", searchValue.trim());
-      }
-    
-      setSearchParams(newParams);
+        // ИСПРАВЛЕНИЕ: используем функцию обновления, чтобы получить актуальные параметры
+        setSearchParams(prev => {
+            const params = new URLSearchParams(prev);
+            
+            if (!searchValue.trim()) {
+                params.delete("search");
+            } else {
+                params.set("search", searchValue.trim());
+            }
+            
+            // Сбрасываем page при изменении поиска
+            params.delete("page");
+            
+            return params;
+        });
     };
 
     return (
@@ -110,7 +113,7 @@ export const CatalogSearch = () => {
                 <Button onClick={handleSearchSubmit}>Find now</Button>
             </div>
             <div className={styles.categories}>
-            <MultiDropdown
+                <MultiDropdown
                     options={categoryOptions}
                     value={selectedCategories}
                     onChange={handleCategoriesChange}

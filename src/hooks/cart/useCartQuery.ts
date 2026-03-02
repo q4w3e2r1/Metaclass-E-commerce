@@ -23,12 +23,21 @@ export const useCart = () => {
     },
   });
 
+  const handleAddToCart = async (productId: number) => {
+    return addMutation.mutateAsync(productId);
+  };
+
+  const handleRemoveFromCart = async (productId: number) => {
+    return removeMutation.mutateAsync(productId);
+  };
+
   return {
     cart: cartQuery.data,
+    addToCart: handleAddToCart,
+    removeFromCart: handleRemoveFromCart,
     isLoading: cartQuery.isLoading,
-    addToCart: addMutation.mutate,
-    removeFromCart: removeMutation.mutate,
     isAdding: addMutation.isPending,
     isRemoving: removeMutation.isPending,
+    isProcessing: addMutation.isPending || removeMutation.isPending,
   };
 };

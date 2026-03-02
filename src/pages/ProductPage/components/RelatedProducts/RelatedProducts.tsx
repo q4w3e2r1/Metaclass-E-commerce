@@ -1,9 +1,11 @@
 
 
 import { Link } from 'react-router-dom';
-import { Button, Card } from '@components'
+import { Button, Card, CartButton } from '@components'
 import { useRelatedProductsByCategory } from '@hooks/products/useRelatedProductsByCategoryQuery';
 import styles from './RelatedProducts.module.scss'
+import { useCart } from '@/hooks/cart/useCartQuery';
+import { useMemo } from 'react';
 
 type RelatedProductsProps = {
     categoryId: number, 
@@ -18,6 +20,12 @@ export const RelatedProducts = ({categoryId, excludeDocumentId}: RelatedProducts
         categoryId,
         excludeDocumentId
     );
+    const { cart } = useCart();
+
+    const cartProductIds = useMemo(() => {
+        if (!Array.isArray(cart)) return new Set<number>();
+        return new Set(cart.map((item: any) => item.product.id));
+      }, [cart]);
 
 
     if (isLoading) return <div>Loading...</div>;
@@ -33,6 +41,7 @@ export const RelatedProducts = ({categoryId, excludeDocumentId}: RelatedProducts
                     product.images?.[0]?.formats?.small?.url ||
                     product.images?.[0]?.url ||
                     "";
+                    const isInCart = cartProductIds.has(product.id);
                     return (
                         <Link
                         key={product.documentId}
@@ -50,7 +59,7 @@ export const RelatedProducts = ({categoryId, excludeDocumentId}: RelatedProducts
                                     </span>
                                 }
                                 actionSlot={
-                                    <Button>Add to Card</Button>
+                                    <CartButton productId={product.id} isInCart={isInCart}  />
                                 }
                             />
                         </Link>
