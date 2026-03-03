@@ -1,4 +1,3 @@
-// components/CartButton/CartButton.tsx
 import { Button } from '@components';
 import { useCart } from '@/hooks/cart/useCartQuery';
 import { useState, useEffect, useRef } from 'react';

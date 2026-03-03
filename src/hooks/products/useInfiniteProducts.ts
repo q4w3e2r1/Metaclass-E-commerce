@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getProductsInfinite } from "../../api/products";
 
-const PAGE_SIZE = 15;
+const PAGE_SIZE = 9;
 
 export const useInfiniteProducts = (categories: string[], search?: string, initialPage=1) => {
   return useInfiniteQuery({

@@ -1,4 +1,4 @@
-import type { StrapiResponse } from "@/types/api";
+import type { StrapiResponse } from "@/types/product";
 import { buildQuery } from "./queryBuilder";
 import { api } from "./axios";
 

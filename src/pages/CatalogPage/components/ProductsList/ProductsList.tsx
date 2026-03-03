@@ -1,4 +1,4 @@
-import { Button, Card, CartButton } from '@components'
+import { Button, Card, CartButton, ProductCardSkeleton } from '@components'
 import styles from './ProductsList.module.scss'
 import { useInfiniteProducts } from "@hooks/products/useInfiniteProducts";
 import { useSearchParams, Link } from "react-router-dom";
@@ -28,8 +28,6 @@ export const ProductsList = () => {
   const {
     loaderRef,
     observePage,
-    isRestoring,
-    targetPageFromUrl
   } = useInfiniteScroll({
     hasNextPage,
     isFetchingNextPage,
@@ -44,15 +42,21 @@ export const ProductsList = () => {
     return new Set(cart.map((item: any) => item.product.id));
   }, [cart]);
 
-  if (isLoading) return <div>Loading...</div>;
+
+  if (isLoading) {
+    return (
+      <div className={styles.list}>
+        <div className={styles.listCards}>
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <ProductCardSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.list}>
-      {isRestoring && (
-        <div className={styles.restoringMessage}>
-          Восстанавливаем позицию на странице {targetPageFromUrl}...
-        </div>
-      )}
 
       <div className={styles.results}>
         <h2 className={styles.total}>Total products</h2>

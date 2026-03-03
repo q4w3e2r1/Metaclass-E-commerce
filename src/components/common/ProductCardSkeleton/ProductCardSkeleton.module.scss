@@ -1,0 +1,164 @@
+@use 'styles/variables';
+
+.skeletonCard {
+  max-width: 360px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  cursor: default;
+  transition: box-shadow 0.15s ease-in-out;
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  
+  :global(.skeleton) {
+    background: linear-gradient(
+      90deg,
+      #D9D9D9 0%,
+      #ABABAB 60%,
+      #ABABAB 70%,
+      #D9D9D9 98%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.imageSkeleton {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(
+    90deg,
+    #D9D9D9 0%,
+    #ABABAB 60%,
+    #ABABAB 70%,
+    #D9D9D9 98%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  display: block;
+}
+
+.contentCard {
+  padding: variables.$space-xl variables.$space-xs;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.contentText {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$space-xxs;
+}
+
+.captionSkeleton {
+  max-width: 240px;
+  width: 100%;
+  height: 18px;
+  background: linear-gradient(
+    90deg,
+    #D9D9D9 0%,
+    #ABABAB 60%,
+    #ABABAB 70%,
+    #D9D9D9 98%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 2px;
+}
+
+.titleSkeleton {
+  max-width: 336px;
+  width: 100%;
+  height: 43px;
+  background: linear-gradient(
+    90deg,
+    #D9D9D9 0%,
+    #ABABAB 60%,
+    #ABABAB 70%,
+    #D9D9D9 98%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 2px;
+}
+
+.descriptionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: variables.$space-xxs;
+}
+
+.descriptionLine {
+  max-width: 336px;
+  width: 100%;
+  height: 14px;
+  background: linear-gradient(
+    90deg,
+    #D9D9D9 0%,
+    #ABABAB 60%,
+    #ABABAB 70%,
+    #D9D9D9 98%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 2px;
+  
+  &:last-child {
+    max-width: 240px;
+  }
+}
+
+.footer {
+  margin-top: variables.$space-xl;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 52px;
+  flex-direction: row;
+}
+
+.contentSlotSkeleton {
+  max-width: 100px;
+  width: 100%;
+  height: 22px;
+  background: linear-gradient(
+    90deg,
+    #D9D9D9 0%,
+    #ABABAB 60%,
+    #ABABAB 70%,
+    #D9D9D9 98%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 2px;
+}
+
+.buttonSkeleton {
+  width: 149px;
+  height: 52px;
+  background: linear-gradient(
+    90deg,
+    #D9D9D9 0%,
+    #ABABAB 60%,
+    #ABABAB 70%,
+    #D9D9D9 98%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}

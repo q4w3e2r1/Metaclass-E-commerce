@@ -6,6 +6,7 @@ import { useRelatedProductsByCategory } from '@hooks/products/useRelatedProducts
 import styles from './RelatedProducts.module.scss'
 import { useCart } from '@/hooks/cart/useCartQuery';
 import { useMemo } from 'react';
+import type { Product } from '@/types/product';
 
 type RelatedProductsProps = {
     categoryId: number, 
@@ -36,7 +37,7 @@ export const RelatedProducts = ({categoryId, excludeDocumentId}: RelatedProducts
         <div className={styles.related}>
                 <div className={styles.title}>Related items</div>
                 <div className={styles.relatedProducts}>
-                {products.map((product: any)=> {
+                {products.map((product: Product)=> {
                     const imageUrl =
                     product.images?.[0]?.formats?.small?.url ||
                     product.images?.[0]?.url ||
@@ -65,7 +66,6 @@ export const RelatedProducts = ({categoryId, excludeDocumentId}: RelatedProducts
                         </Link>
                     )
                 })}
-
                 </div>
             </div>
     )

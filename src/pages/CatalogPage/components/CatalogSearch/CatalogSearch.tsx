@@ -24,7 +24,7 @@ export const CatalogSearch = () => {
         return new Map(data.items.map((c) => [c.id, c.title]));
     }, [data]);
     
-    const categoryOptions: Option[] = useMemo(() => {
+    const categoryOptions = useMemo(() => {
         return Array.from(categoryMap.entries()).map(([id, title]) => ({
           key: String(id),
           value: title,
@@ -60,7 +60,6 @@ export const CatalogSearch = () => {
     }
 
     const handleCategoriesChange = (selected: Option[]) => {
-        // ИСПРАВЛЕНИЕ: используем функцию обновления, чтобы получить актуальные параметры
         setSearchParams(prev => {
             const params = new URLSearchParams(prev);
             
@@ -73,7 +72,6 @@ export const CatalogSearch = () => {
                 );
             }
             
-            // Сбрасываем page при изменении фильтров
             params.delete("page");
             
             return params;
@@ -85,7 +83,6 @@ export const CatalogSearch = () => {
     }
 
     const handleSearchSubmit = () => {
-        // ИСПРАВЛЕНИЕ: используем функцию обновления, чтобы получить актуальные параметры
         setSearchParams(prev => {
             const params = new URLSearchParams(prev);
             
@@ -95,7 +92,6 @@ export const CatalogSearch = () => {
                 params.set("search", searchValue.trim());
             }
             
-            // Сбрасываем page при изменении поиска
             params.delete("page");
             
             return params;

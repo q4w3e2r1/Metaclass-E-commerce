@@ -6,13 +6,14 @@ import styles from './ProductCard.module.scss'
 import RelatedProducts from '../RelatedProducts';
 import { useMemo } from 'react';
 import { useCart } from '@/hooks/cart/useCartQuery';
+import type { CartItem } from '@/types/product';
 
 export const ProductCard = () => {
 
-    const { productId } = useParams();
+    const { productId } = useParams<{ productId: string }>();
 
-    const { data, isLoading } = useProduct(productId);
-    const { cart} = useCart();
+    const { data, isLoading, error } = useProduct(productId);
+    const { cart } = useCart();
 
 
     const cartProductIds = useMemo(() => {
@@ -20,7 +21,13 @@ export const ProductCard = () => {
         return new Set(cart.map((item: any) => item.product.id));
       }, [cart]);
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error || !data) {
+        return <div>Product not found or error loading</div>;
+    }
 
     const isInCart = cartProductIds.has(data.id);
 
@@ -48,7 +55,12 @@ export const ProductCard = () => {
                 </div>
             </div>
 
-            <RelatedProducts categoryId={data.productCategory.id} excludeDocumentId={data.documentId}/>
+             {data.productCategory && (
+                <RelatedProducts 
+                    categoryId={data.productCategory.id} 
+                    excludeDocumentId={data.documentId}
+                />
+            )}
         </div>
     )
 }

@@ -1,44 +1,13 @@
 import { api } from "./axios";
 import { buildQuery } from "./queryBuilder";
-import type { StrapiResponse } from "../types/api";
-
-export interface ProductsQueryParams {
-  sort?: string;
-  fields?: string[];
-  pagination?: {
-    page?: number;
-    pageSize?: number;
-    withCount?: boolean;
-    start?: number;
-    limit?: number;
-  };
-}
-
-export const getProducts = async (
-  params?: ProductsQueryParams
-) => {
-  const query = buildQuery({
-    populate: ["images", "productCategory"],
-    ...params,
-  });
-
-  const { data } = await api.get<StrapiResponse<any>>(
-    `/products?${query}`
-  );
-
-  return {
-    items: data.data,
-    total: data.meta?.pagination?.total ?? 0,
-    pagination: data.meta?.pagination,
-  };
-};
+import type { Product, StrapiResponse, RelatedProductsResponse, StrapiSingleResponse } from '@/types/product';
 
 export const getProductById = async (documentId: string) => {
   const query = buildQuery({
     populate: ["images", "productCategory"],
   });
 
-  const { data } = await api.get<StrapiResponse<any>>(
+  const { data } = await api.get<StrapiSingleResponse<Product>>(
     `/products/${documentId}?${query}`
   );
 
@@ -49,7 +18,7 @@ export const getProductById = async (documentId: string) => {
 export const getRelatedProductsByCategory = async (
   categoryId: number,
   excludeDocumentId?: string
-) => {
+): Promise<RelatedProductsResponse> => {
 
   const query = buildQuery({
     populate: ["images", "productCategory"],
@@ -67,7 +36,7 @@ export const getRelatedProductsByCategory = async (
     },
   });
 
-  const { data } = await api.get<StrapiResponse<any>>(
+  const { data } = await api.get<StrapiResponse<Product>>(
     `/products?${query}`
   );
 
