@@ -23,7 +23,7 @@
       "@components/*": ["src/components/common/*"],
       "@pages/*": ["src/pages/*"],
       "config": ["src/config/index"],
-      "config/*": ["src/config/*"],
+      "@config/*": ["src/config/*"],
       "styles": ["src/styles/index"],
       "styles/*": ["src/styles/*"],
       "utils": ["src/utils/index"],

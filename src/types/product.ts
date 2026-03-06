@@ -27,6 +27,15 @@ export interface ProductImage {
     title: string;
     description?: string;
   }
+
+  export interface StrapiImage {
+    url: string;
+    formats?: {
+      small?: { url: string };
+      medium?: { url: string };
+      thumbnail?: { url: string };
+    };
+  }
   
   export interface Product {
     id: number;
@@ -39,6 +48,7 @@ export interface ProductImage {
     createdAt?: string;
     updatedAt?: string;
   }
+
   
   export interface Pagination {
     page: number;
@@ -84,4 +94,9 @@ export interface ProductImage {
     isAdding: boolean;
     isRemoving: boolean;
     isProcessing: boolean;
+  }
+
+  export interface InfiniteProductsResponse {
+    items: Product[];
+    pagination: Pagination;
   }

@@ -19,7 +19,7 @@ type ProductCategoryDto = {
       },
     });
   
-    const { data } = await api.get<StrapiResponse<ProductCategoryDto[]>>(
+    const { data } = await api.get<StrapiResponse<ProductCategoryDto>>(
       `/product-categories?${query}`
     );
   

@@ -1,10 +1,14 @@
-import { Button, Card, CartButton, ProductCardSkeleton } from '@components'
+import { Card, CartButton, ProductCardSkeleton } from '@components'
 import styles from './ProductsList.module.scss'
 import { useInfiniteProducts } from "@hooks/products/useInfiniteProducts";
 import { useSearchParams, Link } from "react-router-dom";
 import { useMemo, Fragment } from 'react';
 import { useCart } from '@/hooks/cart/useCartQuery';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+import { routes } from '@config/routes'
+
+const SKELETON_COUNT = 6;
+const SKELETON_ITEMS = Array.from({ length: SKELETON_COUNT }, (_, i) => i);
 
 export const ProductsList = () => {
   const { cart } = useCart();
@@ -38,8 +42,8 @@ export const ProductsList = () => {
   const total = data?.pages?.[0]?.pagination?.total ?? 0;
 
   const cartProductIds = useMemo(() => {
-    if (!Array.isArray(cart)) return new Set<number>();
-    return new Set(cart.map((item: any) => item.product.id));
+    if (!cart) return new Set<number>();
+    return new Set(cart.map((item) => item.product.id));
   }, [cart]);
 
 
@@ -47,7 +51,7 @@ export const ProductsList = () => {
     return (
       <div className={styles.list}>
         <div className={styles.listCards}>
-          {[1, 2, 3, 4, 5, 6].map((i) => (
+          {SKELETON_ITEMS.map((i) => (
             <ProductCardSkeleton key={i} />
           ))}
         </div>
@@ -76,7 +80,7 @@ export const ProductsList = () => {
                 aria-hidden="true"
               />
 
-              {page.items.map((product: any) => {
+              {page.items.map((product) => {
                 const imageUrl =
                   product.images?.[0]?.formats?.small?.url ||
                   product.images?.[0]?.url ||
@@ -87,7 +91,7 @@ export const ProductsList = () => {
                 return (
                   <Link
                     key={product.documentId}
-                    to={`/products/${product.documentId}`}
+                    to={routes.product.getRoute(product.documentId)}
                     style={{ textDecoration: "none", color: "inherit" }}
                   >
                     <Card
@@ -111,13 +115,7 @@ export const ProductsList = () => {
       </div>
 
       {hasNextPage && (
-        <div ref={loaderRef} className={styles.loader}>
-          {isFetchingNextPage ? (
-            <span>Loading...</span>
-          ) : (
-            <span>Scroll to load more</span>
-          )}
-        </div>
+        <div ref={loaderRef} className={styles.loader}/>
       )}
     </div>
   );

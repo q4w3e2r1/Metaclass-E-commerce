@@ -1,12 +1,13 @@
 
 
 import { Link } from 'react-router-dom';
-import { Button, Card, CartButton } from '@components'
+import { Card, CartButton } from '@components'
 import { useRelatedProductsByCategory } from '@hooks/products/useRelatedProductsByCategoryQuery';
 import styles from './RelatedProducts.module.scss'
 import { useCart } from '@/hooks/cart/useCartQuery';
 import { useMemo } from 'react';
 import type { Product } from '@/types/product';
+import { routes } from '@config/routes'
 
 type RelatedProductsProps = {
     categoryId: number, 
@@ -24,8 +25,8 @@ export const RelatedProducts = ({categoryId, excludeDocumentId}: RelatedProducts
     const { cart } = useCart();
 
     const cartProductIds = useMemo(() => {
-        if (!Array.isArray(cart)) return new Set<number>();
-        return new Set(cart.map((item: any) => item.product.id));
+        if (!cart) return new Set<number>();
+        return new Set(cart.map((item) => item.product.id));
       }, [cart]);
 
 
@@ -46,7 +47,7 @@ export const RelatedProducts = ({categoryId, excludeDocumentId}: RelatedProducts
                     return (
                         <Link
                         key={product.documentId}
-                        to={`/products/${product.documentId}`}
+                        to={routes.product.getRoute(product.documentId)}
                         style={{ textDecoration: "none", color: "inherit" }}
                         >
                             <Card

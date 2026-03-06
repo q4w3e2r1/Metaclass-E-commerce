@@ -6,7 +6,6 @@ import styles from './ProductCard.module.scss'
 import RelatedProducts from '../RelatedProducts';
 import { useMemo } from 'react';
 import { useCart } from '@/hooks/cart/useCartQuery';
-import type { CartItem } from '@/types/product';
 
 export const ProductCard = () => {
 
@@ -17,8 +16,8 @@ export const ProductCard = () => {
 
 
     const cartProductIds = useMemo(() => {
-        if (!Array.isArray(cart)) return new Set<number>();
-        return new Set(cart.map((item: any) => item.product.id));
+        if (!cart) return new Set<number>();
+        return new Set(cart.map((item) => item.product.id));
       }, [cart]);
 
     if (isLoading) {

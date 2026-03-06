@@ -1,7 +1,8 @@
 import { api } from "./axios";
+import type { CartResponse } from "@/types/cart";
 
 export const getCart = async () => {
-    const { data } = await api.get("/cart");
+    const { data } = await api.get<CartResponse>("/cart");
     return data;
   };
   

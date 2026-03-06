@@ -1,6 +1,6 @@
 import { api } from "./axios";
 import { buildQuery } from "./queryBuilder";
-import type { Product, StrapiResponse, RelatedProductsResponse, StrapiSingleResponse } from '@/types/product';
+import type { Product, StrapiResponse, RelatedProductsResponse, StrapiSingleResponse, InfiniteProductsResponse } from '@/types/product';
 
 export const getProductById = async (documentId: string) => {
   const query = buildQuery({
@@ -59,9 +59,9 @@ export const getProductsInfinite = async ({
   pageSize,
   categories,
   search,
-}: GetInfiniteProductsParams) => {
+}: GetInfiniteProductsParams): Promise<InfiniteProductsResponse> => {
 
-  const filters: Record<string, any> = {};
+  const filters: Record<string, unknown> = {};
   
   if (categories && categories.length > 0) {
     filters.productCategory = {
@@ -87,7 +87,7 @@ export const getProductsInfinite = async ({
     ...(Object.keys(filters).length > 0 && { filters }),
   });
 
-  const { data } = await api.get(
+  const { data } = await api.get<StrapiResponse<Product>>(
     `/products?${query}`
   );
 

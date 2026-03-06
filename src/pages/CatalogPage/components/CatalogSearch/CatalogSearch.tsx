@@ -36,18 +36,18 @@ export const CatalogSearch = () => {
         return categoriesParam ? categoriesParam.split(",") : [];
     }, [categoriesParam]);
 
-    const selectedCategories: Option[] = useMemo(() => {
-        return selectedIds
-          .map((id) => {
-            const title = categoryMap.get(Number(id));
-            if (!title) return null;
-            return {
-              key: id,
-              value: title,
-            };
-          })
-          .filter(Boolean) as Option[];
-    }, [selectedIds, categoryMap]);
+    const selectedCategories = useMemo(() => {
+        const result: Option[] = [];
+        
+        selectedIds.forEach((id) => {
+          const title = categoryMap.get(Number(id));
+          if (title) {
+            result.push({ key: id, value: title });
+          }
+        });
+        
+        return result;
+      }, [selectedIds, categoryMap]);
 
     const getCategoriesTitle = (selected: Option[]): string => {
         if (selected.length === 0) {

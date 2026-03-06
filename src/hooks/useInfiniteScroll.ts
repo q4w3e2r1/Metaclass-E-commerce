@@ -26,6 +26,7 @@ export const useInfiniteScroll = ({
   const pageObserverRef = useRef<IntersectionObserver | null>(null);
   const lastPageRef = useRef(1);
   const initialRestoreDoneRef = useRef(false);
+  const isFirstRestoreAttempted = useRef(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [isRestoring, setIsRestoring] = useState(false);
@@ -71,8 +72,12 @@ export const useInfiniteScroll = ({
       return;
     }
 
+    if (isFirstRestoreAttempted.current || targetPageFromUrl <= 1) return;
+
     const el = pageRefs.current.get(targetPageFromUrl);
     if (!el) return;
+
+    isFirstRestoreAttempted.current = true;
 
     setIsRestoring(true);
 
@@ -102,10 +107,6 @@ export const useInfiniteScroll = ({
   }, [
     targetPageFromUrl,
     totalPages,
-    hasNextPage,
-    isFetchingNextPage,
-    fetchNextPage,
-    setSearchParams,
   ]);
 
   const updateUrlPage = useCallback(
@@ -139,21 +140,27 @@ export const useInfiniteScroll = ({
           (entries) => {
             if (isRestoring) return;
 
-            const visible = entries
-              .map((entry) => ({
-                page: Number(entry.target.getAttribute("data-page")),
-                top: entry.boundingClientRect.top,
-              }))
-              .filter((e) => e.top <= 120)
-              .sort((a, b) => Math.abs(a.top) - Math.abs(b.top));
+            let bestPage = null;
+            let minAbsTop = Infinity;
 
-            if (visible.length > 0) {
-              updateUrlPage(visible[0].page);
+            for (let i = 0; i < entries.length; i++) {
+              const entry = entries[i];
+              const top = entry.boundingClientRect.top;
+
+              if (top <= 120) {
+                const absTop = Math.abs(top);
+                
+                if (absTop < minAbsTop) {
+                  minAbsTop = absTop;
+                  bestPage = Number(entry.target.getAttribute("data-page"));
+                }
+              }
+            }
+            if (bestPage !== null) {
+              updateUrlPage(bestPage);
             }
           },
-          {
-            threshold: 0,
-          }
+          { threshold: 0 }
         );
       }
 
