@@ -1,67 +1,124 @@
-
-import { Button, Card } from '@components'
+import { Card, CartButton, ProductCardSkeleton } from '@components'
 import styles from './ProductsList.module.scss'
-import { useProducts } from "@hooks/products/useProductsQuery";
-import { Link } from "react-router-dom";
+import { useInfiniteProducts } from "@hooks/products/useInfiniteProducts";
+import { useSearchParams, Link } from "react-router-dom";
+import { useMemo, Fragment } from 'react';
+import { useCart } from '@/hooks/cart/useCartQuery';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+import { routes } from '@config/routes'
+
+const SKELETON_COUNT = 6;
+const SKELETON_ITEMS = Array.from({ length: SKELETON_COUNT }, (_, i) => i);
 
 export const ProductsList = () => {
+  const { cart } = useCart();
+  const [searchParams] = useSearchParams();
 
-    const { data, isLoading } = useProducts(
-        {
-            pagination : {
-                withCount: true,
-                pageSize: 20
-            }
-        }
-    );
+  const search = searchParams.get("search") ?? "";
+  const categoryIds = useMemo(() => {
+    return searchParams.get("categories")?.split(",").filter(Boolean) ?? [];
+  }, [searchParams]);
 
-    if (isLoading) return <div>Loading...</div>;
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteProducts(categoryIds, search);
 
-    const products = data?.items ?? [];
+  const totalPages = data?.pages.length ?? 0;
+
+  const {
+    loaderRef,
+    observePage,
+  } = useInfiniteScroll({
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    totalPages
+  });
+
+  const total = data?.pages?.[0]?.pagination?.total ?? 0;
+
+  const cartProductIds = useMemo(() => {
+    if (!cart) return new Set<number>();
+    return new Set(cart.map((item) => item.product.id));
+  }, [cart]);
 
 
+  if (isLoading) {
     return (
-        <div className={styles.list}>
-
-            <div className={styles.results}>
-                <h2 className={styles.total}>Total products</h2>
-                <div className={styles.amount}>{data?.total ?? 0}</div>
-            </div>
-            <div className={styles.listCards}>
-                {products.map((product: any)=> {
-                    
-                    const imageUrl =
-                    product.images?.[0]?.formats?.small?.url ||
-                    product.images?.[0]?.url ||
-                    "";
-
-                    return (
-                        <Link
-                        key={product.documentId}
-                        to={`/products/${product.documentId}`}
-                        style={{ textDecoration: "none", color: "inherit" }}
-                        >
-                            <Card
-                                key={product.documentId}
-                                image={imageUrl}
-                                title={product.title}
-                                subtitle={product.description}
-                                contentSlot={
-                                    <span>
-                                    {product.price}
-                                    </span>
-                                }
-                                actionSlot={
-                                    <Button>Add to Card</Button>
-                                }
-                            />
-                        </Link>
-                    )
-                })}
-            </div>
-            <div className={styles.pagination}>Pagination</div>
+      <div className={styles.list}>
+        <div className={styles.listCards}>
+          {SKELETON_ITEMS.map((i) => (
+            <ProductCardSkeleton key={i} />
+          ))}
         </div>
-    )
-}
+      </div>
+    );
+  }
 
-export default ProductsList
+  return (
+    <div className={styles.list}>
+
+      <div className={styles.results}>
+        <h2 className={styles.total}>Total products</h2>
+        <div className={styles.amount}>{total}</div>
+      </div>
+
+      <div className={styles.listCards}>
+        {data?.pages.map((page, pageIndex) => {
+          const pageNumber = pageIndex + 1;
+          
+          return (
+            <Fragment key={pageIndex}>
+              <div
+                data-page={pageNumber}
+                ref={observePage(pageNumber)}
+                className={styles.pageAnchor}
+                aria-hidden="true"
+              />
+
+              {page.items.map((product) => {
+                const imageUrl =
+                  product.images?.[0]?.formats?.small?.url ||
+                  product.images?.[0]?.url ||
+                  "";
+
+                const isInCart = cartProductIds.has(product.id);
+
+                return (
+                  <Link
+                    key={product.documentId}
+                    to={routes.product.getRoute(product.documentId)}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <Card
+                      image={imageUrl}
+                      title={product.title}
+                      subtitle={product.description}
+                      contentSlot={<span>{product.price}</span>}
+                      actionSlot={
+                        <CartButton 
+                        productId={product.id}
+                        isInCart={isInCart}
+                    />
+                      }
+                    />
+                  </Link>
+                );
+              })}
+            </Fragment>
+          );
+        })}
+      </div>
+
+      {hasNextPage && (
+        <div ref={loaderRef} className={styles.loader}/>
+      )}
+    </div>
+  );
+};
+
+export default ProductsList;

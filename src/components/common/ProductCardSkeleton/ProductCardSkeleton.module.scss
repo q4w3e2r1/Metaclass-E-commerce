@@ -1,0 +1,113 @@
+@use 'styles/variables';
+
+@mixin shimmer-effect {
+  background: linear-gradient(
+    90deg,
+    #D9D9D9 0%,
+    #ABABAB 60%,
+    #ABABAB 70%,
+    #D9D9D9 98%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeletonCard {
+  max-width: 360px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  cursor: default;
+  transition: box-shadow 0.15s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.imageSkeleton {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: block;
+  @include shimmer-effect;
+}
+
+.contentCard {
+  padding: variables.$space-xl variables.$space-xs;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.captionSkeleton {
+  max-width: 240px;
+  width: 100%;
+  height: 18px;
+  border-radius: 2px;
+  @include shimmer-effect;
+}
+
+.titleSkeleton {
+  max-width: 336px;
+  width: 100%;
+  height: 43px;
+  border-radius: 2px;
+  @include shimmer-effect;
+}
+
+.descriptionLine {
+  max-width: 336px;
+  width: 100%;
+  height: 14px;
+  border-radius: 2px;
+  @include shimmer-effect;
+  
+  &:last-child {
+    max-width: 240px;
+  }
+}
+
+.contentSlotSkeleton {
+  max-width: 100px;
+  width: 100%;
+  height: 22px;
+  border-radius: 2px;
+  @include shimmer-effect;
+}
+
+.buttonSkeleton {
+  width: 149px;
+  height: 52px;
+  border-radius: 4px;
+  @include shimmer-effect;
+}
+
+.contentText {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$space-xxs;
+}
+
+.descriptionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: variables.$space-xxs;
+}
+
+.footer {
+  margin-top: variables.$space-xl;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 52px;
+  flex-direction: row;
+}

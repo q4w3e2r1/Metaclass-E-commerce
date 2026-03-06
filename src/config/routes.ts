@@ -1,14 +1,14 @@
 export const routes = {
   main: {
     mask: "/",
-    create: () => "/",
+    getRoute: () => "/",
   },
   products: {
-    mask: "products",
-    create: () => "/products",
+    mask: "/products/",
+    getRoute: () => "/products/",
   },
   product: {
-    mask: "products/:productId",
-    create: (id: string) => `/products/${id}`,
+    mask: "/products/:productId",
+    getRoute: (id: string | number) => `/products/${id}`,
   },
 };
